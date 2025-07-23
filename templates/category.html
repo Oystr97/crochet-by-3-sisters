@@ -1,0 +1,12 @@
+<h2>{{ category }} Collection</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    {% for product in products %}
+    <div style="width: 200px; text-align: center;">
+        <h4>{{ product[2][:50] }}</h4>
+        <a href="/product/{{ product[0] }}">
+            <img src="{{ url_for('static', filename='uploads/' + product[4].split(',')[0]) }}" width="180">
+        </a>
+        <p>₹{{ product[3] }}</p>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,14 @@
+<h2>Shipping Details</h2>
+<form method="POST">
+    <label>Name:</label><br>
+    <input type="text" name="name" value="{{ user.name }}" required><br><br>
+
+    <label>Contact (+91...):</label><br>
+    <input type="text" name="contact" value="{{ user.contact }}" required><br><br>
+
+    <label>Address:</label><br>
+    <textarea name="address" required>{{ user.address }}</textarea><br><br>
+
+    <p><strong>Note:</strong> Delivery may take 10–15 days. For faster delivery, WhatsApp: +919665595513</p>
+    <button type="submit">Proceed to Payment</button>
+</form>

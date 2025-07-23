@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Crochet by 3 Sisters{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- External CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Custom Styles -->
+    <style>
+        /* Sidebar styling */
+        .sidebar a, .sidebar h3 {
+            color: #a62264 !important;
+            font-weight: 600;
+        }
+
+        .sidebar a:hover {
+            color: #d63384 !important;
+        }
+
+        /* Footer styling */
+        .footer-address {
+            font-size: 15px;
+            color: #d63384;
+            font-weight: 500;
+        }
+
+        .footer-logo {
+            width: 100px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+        }
+
+        /* Main content styling */
+        .content h1, .content h2, .content p.highlight {
+            color: #d63384;
+            font-weight: 600;
+        }
+
+        .content p.tagline {
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+<!-- ✅ Country Selector Dropdown -->
+<div style="text-align: right; padding: 10px; background-color: transparent;">
+    <form action="/set_country" method="POST" style="display: inline;">
+        <select name="country" onchange="this.form.submit()" style="padding: 5px; border-radius: 6px;">
+            <option value="India" {% if session.country == 'India' %}selected{% endif %}>🇮🇳 India</option>
+            <option value="UK" {% if session.country == 'UK' %}selected{% endif %}>🇬🇧 UK</option>
+        </select>
+    </form>
+</div>
+
+    {# ✅ Show sidebar only when it's not the homepage (# /) #}
+    {% if request.path != '/' %}
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <h3 style="font-size: 1.2rem; text-align: center;">Our Creations</h3>
+        <a href="/earrings">Earrings</a>
+        <a href="/bracelets">Bracelets</a>
+        <a href="/keychains">Keychains</a>
+        <a href="/flowers">Flowers</a>
+    </div>
+
+    <!-- ✅ Thank You image shown on all pages except home -->
+<div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 999; text-align: center;">
+    <img src="{{ url_for('static', filename='thank you.jpg') }}" alt="Thank You" style="width: 100px; opacity: 0.9;">
+</div>
+
+    {% endif %}
+
+    <!-- Main content block for individual pages -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

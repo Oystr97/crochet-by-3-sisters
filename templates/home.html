@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .homepage h1 {
+        color: #d63384;
+    }
+
+    .homepage p {
+        color: #000000;
+    }
+
+    .homepage .section {
+        background-color: #ffffffcc;
+        padding: 40px;
+        border-radius: 20px;
+        margin: 20px auto;
+        width: 90%;
+        text-align: center;
+    }
+
+    .categories {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin: 30px 0;
+    }
+
+    .categories div {
+        text-align: center;
+    }
+
+    .categories a {
+        color: #d63384;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .categories a:hover {
+        text-decoration: underline;
+    }
+
+    .categories img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .homepage-logo {
+        display: block;
+        margin: 30px auto 0 auto;
+        width: 100px;
+        border-radius: 12px;
+    }
+
+    /* 👇 Icons at top-right corner */
+    .icon-fixed-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .icon-fixed-container img {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+</style>
+
+<!-- ✅ Top-right icons: Login, Create Account & Your Cart -->
+<div class="icon-fixed-container">
+    <a href="/signup">
+        <img src="{{ url_for('static', filename='account.png') }}" alt="Create Account">
+    </a>
+    <a href="/cart">
+        <img src="{{ url_for('static', filename='cart.png') }}" alt="Your Cart">
+    </a>
+</div>
+
+<div class="homepage">
+    <div class="section">
+        <h1>Welcome to Crochet by 3 Sisters</h1>
+        <p>Crafted with love, inspired by tradition, designed with grace.</p>
+    </div>
+
+    <div class="section">
+        <h2 style="text-align: center;">Explore our collection!</h2>
+        <div class="categories">
+            <div><a href="/earrings"><img src="{{ url_for('static', filename='earrings.jpg') }}"><br>Earrings</a></div>
+            <div><a href="/bracelets"><img src="{{ url_for('static', filename='bracelets.jpg') }}"><br>Bracelets</a></div>
+            <div><a href="/keychains"><img src="{{ url_for('static', filename='keychain.png') }}"><br>Keychains</a></div>
+            <div><a href="/flowers"><img src="{{ url_for('static', filename='flowers.jpg') }}"><br>Flowers</a></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 style="text-align: center;">Meet the Makers</h2>
+        <div class="categories">
+            <div><a href="/makers"><img src="{{ url_for('static', filename='meet the makers.jpg') }}"></a></div>
+        </div>
+    </div>
+
+    <!-- ✅ Logo at the bottom -->
+    <div style="text-align: center; margin: 50px 0;">
+        <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Crochet by 3 Sisters" style="width: 100px; border-radius: 12px;">
+    </div>
+</div>
+{% endblock %}

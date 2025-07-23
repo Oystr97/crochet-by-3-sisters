@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ✅ One-time thank-you popup after signup -->
+{% if show_thank_you %}
+<script>
+    alert("🎉 Thank you for signing up! You can now review your cart and checkout.");
+</script>
+{% endif %}
+
+<div style="max-width: 600px; margin: auto;">
+    <h2>Your Cart</h2>
+
+    {% if cart %}
+    <form method="POST" action="/update_cart">
+        <table style="width:100%; border-collapse: collapse; text-align: center;">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i, item in enumerate(cart) %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <select name="quantities" onchange="this.form.submit()">
+                            {% for q in range(1, 11) %}
+                                <option value="{{ i }}-{{ q }}" {% if item.quantity == q %}selected{% endif %}>{{ q }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        {% if country == 'UK' %}
+                            £{{ '%.2f' % item.display_price }}
+                        {% else %}
+                            ₹{{ item.display_price }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if country == 'UK' %}
+                            £{{ '%.2f' % (item.display_price * item.quantity) }}
+                        {% else %}
+                            ₹{{ item.display_price * item.quantity }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+
+    <h3 style="margin-top: 20px;">
+        {% if country == 'UK' %}
+            Total: £{{ '%.2f' % total }}
+        {% else %}
+            Total: ₹{{ total }}
+        {% endif %}
+    </h3>
+
+    <a href="/checkout_address">
+        <button style="margin-top: 20px;">Proceed to Checkout</button>
+    </a>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

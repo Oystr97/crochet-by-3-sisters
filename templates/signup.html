@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .login-link-fixed {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .login-link-fixed a {
+        color: #d63384;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .login-link-fixed a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- ✅ Top-right login icon -->
+<div class="login-link-fixed">
+    <a href="/login">Already have an account? Login</a>
+</div>
+
+<div style="text-align:center; max-width: 500px; margin: auto;">
+    <h2>Create Your Account</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="color: red;">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/signup" style="text-align: left;">
+        <!-- ✅ Name Validation: Only letters and spaces -->
+        <label>Name:</label><br>
+        <input type="text" name="name"
+               pattern="[A-Za-z\s]+"
+               title="Only letters and spaces allowed"
+               required><br><br>
+
+        <!-- ✅ Contact Validation: +country code + 10 digits -->
+        <label>Contact Number (include country code, e.g., +911234567890):</label><br>
+        <input type="tel" name="contact"
+               pattern="^\+\d{1,4}[0-9]{10}$"
+               title="Include country code (e.g., +911234567890)"
+               required><br><br>
+
+        <!-- ✅ Email -->
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <!-- ✅ Address -->
+        <label>Address:</label><br>
+        <textarea name="address" rows="3" required></textarea><br><br>
+
+        <!-- ✅ Password Validation: min 6 characters -->
+        <label>Password (min 6 characters):</label><br>
+        <input type="password" name="password" minlength="6" required><br><br>
+
+        <button type="submit">Create Account</button>
+    </form>
+</div>
+{% endblock %}

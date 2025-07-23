@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="max-width: 600px; margin: auto; text-align: center;">
+    <h2>Payment</h2>
+
+    {{% if country == 'UK' %}
+    <p>Total Amount: £{{ '%.2f' % total }}</p>
+    <p>Scan this QR to pay in GBP:</p>
+    <img src="{{ url_for('static', filename='uk_qr.png') }}" alt="UK QR" style="width:200px;">
+{% else %}
+    <p>Total Amount: ₹{{ total }}</p>
+    <p>Scan this QR to pay using UPI:</p>
+    <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="Dynamic UPI QR" style="width:200px;"><br><br>
+
+    <strong>UPI ID:</strong> <code>flaviya@okaxis</code><br>
+    <strong>Google Pay No.:</strong> <code>9876543210</code>
+{% endif %}
+
+    <form action="/payment_success" method="POST" style="margin-top: 30px;">
+        <label for="upi_txn">Enter Transaction ID:</label><br>
+        <input type="text" id="upi_txn" name="upi_txn" required><br><br>
+        <button type="submit">Submit Payment</button>
+    </form>
+</div>
+
+{% endblock %}
