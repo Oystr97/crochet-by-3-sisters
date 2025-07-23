@@ -1,4 +1,3 @@
-# Updated app.py with country-based pricing support
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -6,9 +5,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-# ✅ Reusable DB connection function
-def get_db_connection():
+# ✅ Separate DB connection functions
+def get_users_db_connection():
     conn = sqlite3.connect('users.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_products_db_connection():
+    conn = sqlite3.connect('products.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -30,7 +34,7 @@ def makers():
 
 @app.route('/<category>')
 def show_products(category):
-    conn = get_db_connection()
+    conn = get_products_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM products WHERE category = ?", (category.lower(),))
     products = cursor.fetchall()
@@ -46,7 +50,6 @@ def show_products(category):
 
     return render_template("product_list.html", category=category.title(), products=products)
 
-# ✅ SIGNUP route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -56,7 +59,7 @@ def signup():
         address = request.form['address']
         password = request.form['password']
 
-        conn = get_db_connection()
+        conn = get_users_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM users WHERE email = ? OR contact = ?', (email, contact))
         user = cursor.fetchone()
@@ -78,14 +81,13 @@ def signup():
 
     return render_template("signup.html")
 
-# ✅ LOGIN route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         identifier = request.form['identifier']
         password = request.form['password']
 
-        conn = get_db_connection()
+        conn = get_users_db_connection()
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM users WHERE email = ? OR contact = ?', (identifier, identifier))
         user = cursor.fetchone()
@@ -100,7 +102,6 @@ def login():
 
     return render_template('login.html')
 
-# ✅ ADD TO CART
 @app.route('/add_to_cart', methods=["POST"])
 def add_to_cart():
     user_country = session.get('country', 'India')
@@ -126,8 +127,8 @@ def cart():
 
     total = 0
     for item in cart:
-        item['display_price'] = item['price_inr'] if country == 'India' else item['price_gbp']
-        total += item['display_price'] * item['quantity']
+        item['display_price'] = item['price']  # Already set correctly when added
+        total += item['price'] * item['quantity']
 
     return render_template("cart.html", cart=cart, total=total, country=country)
 
@@ -158,7 +159,7 @@ def checkout_address():
         }
         return redirect('/payment')
 
-    conn = get_db_connection()
+    conn = get_users_db_connection()
     user_email = session.get('user')
     user_data = conn.execute('SELECT * FROM users WHERE email = ?', (user_email,)).fetchone()
     conn.close()
@@ -171,8 +172,7 @@ def payment():
     cart = session.get('cart', [])
     total = 0
     for item in cart:
-        price = item['price_inr'] if country == 'India' else item['price_gbp']
-        total += price * item['quantity']
+        total += item['price'] * item['quantity']
     return render_template("payment.html", total=total, country=country)
 
 @app.route('/payment_success', methods=['POST'])

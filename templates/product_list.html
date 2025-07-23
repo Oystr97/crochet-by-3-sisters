@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} - Crochet by 3 Sisters{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-2xl font-semibold mb-4">{{ category }}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for product in products %}
+        <div class="border rounded-xl p-4 shadow-md hover:shadow-lg transition">
+            <div class="text-center font-semibold text-lg mb-2">{{ product.name }}</div>
+            <img src="{{ product.images.split(',')[0] }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded-lg">
+            <div class="text-center mt-2 font-medium text-green-700">{{ product.display_price }}</div>
+            <form action="/product/{{ product.id }}" method="get" class="mt-3 text-center">
+                <button class="bg-pink-600 text-white px-4 py-1 rounded-full hover:bg-pink-700">View Details</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
