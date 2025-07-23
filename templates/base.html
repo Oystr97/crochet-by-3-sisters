@@ -47,7 +47,9 @@
     </style>
 </head>
 <body>
-<!-- ✅ Country Selector Dropdown -->
+
+<!-- ✅ Country Selector Dropdown — ONLY visible on home page -->
+{% if request.path == '/' %}
 <div style="text-align: right; padding: 10px; background-color: transparent;">
     <form action="/set_country" method="POST" style="display: inline;">
         <select name="country" onchange="this.form.submit()" style="padding: 5px; border-radius: 6px;">
@@ -56,29 +58,28 @@
         </select>
     </form>
 </div>
+{% endif %}
 
-    {# ✅ Show sidebar only when it's not the homepage (# /) #}
-    {% if request.path != '/' %}
-    <div class="sidebar">
-        <a href="/">Home</a>
-        <h3 style="font-size: 1.2rem; text-align: center;">Our Creations</h3>
-        <a href="/earrings">Earrings</a>
-        <a href="/bracelets">Bracelets</a>
-        <a href="/keychains">Keychains</a>
-        <a href="/flowers">Flowers</a>
-    </div>
+<!-- ✅ Sidebar and thank you image — shown on all pages EXCEPT home -->
+{% if request.path != '/' %}
+<div class="sidebar">
+    <a href="/">Home</a>
+    <h3 style="font-size: 1.2rem; text-align: center;">Our Creations</h3>
+    <a href="/earrings">Earrings</a>
+    <a href="/bracelets">Bracelets</a>
+    <a href="/keychains">Keychains</a>
+    <a href="/flowers">Flowers</a>
+</div>
 
-    <!-- ✅ Thank You image shown on all pages except home -->
 <div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 999; text-align: center;">
     <img src="{{ url_for('static', filename='thank you.jpg') }}" alt="Thank You" style="width: 100px; opacity: 0.9;">
 </div>
+{% endif %}
 
-    {% endif %}
-
-    <!-- Main content block for individual pages -->
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
+<!-- Main content block for individual pages -->
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
 
 </body>
 </html>
