@@ -1,5 +1,4 @@
 # Ignore database and secrets
-products.db
 credentials.json
 __pycache__/
 *.pyc
