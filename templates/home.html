@@ -55,7 +55,6 @@
         border-radius: 12px;
     }
 
-    /* 👇 Icons at top-right corner */
     .icon-fixed-container {
         position: fixed;
         top: 20px;
@@ -93,10 +92,10 @@
     <div class="section">
         <h2 style="text-align: center;">Explore our collection!</h2>
         <div class="categories">
-            <div><a href="/earrings"><img src="{{ url_for('static', filename='earrings.jpg') }}"><br>Earrings</a></div>
-            <div><a href="/bracelets"><img src="{{ url_for('static', filename='bracelets.jpg') }}"><br>Bracelets</a></div>
-            <div><a href="/keychains"><img src="{{ url_for('static', filename='keychain.png') }}"><br>Keychains</a></div>
-            <div><a href="/flowers"><img src="{{ url_for('static', filename='flowers.jpg') }}"><br>Flowers</a></div>
+            <div><a href="/category/earrings"><img src="{{ url_for('static', filename='earrings.jpg') }}"><br>Earrings</a></div>
+            <div><a href="/category/bracelets"><img src="{{ url_for('static', filename='bracelets.jpg') }}"><br>Bracelets</a></div>
+            <div><a href="/category/keychains"><img src="{{ url_for('static', filename='keychain.png') }}"><br>Keychains</a></div>
+            <div><a href="/category/flowers"><img src="{{ url_for('static', filename='flowers.jpg') }}"><br>Flowers</a></div>
         </div>
     </div>
 
@@ -107,7 +106,6 @@
         </div>
     </div>
 
-    <!-- ✅ Logo at the bottom -->
     <div style="text-align: center; margin: 50px 0;">
         <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Crochet by 3 Sisters" style="width: 100px; border-radius: 12px;">
     </div>
