@@ -1,4 +1,9 @@
-venv/
+# Ignore database and secrets
+products.db
+credentials.json
 __pycache__/
 *.pyc
 .env
+
+# Ignore internal git repo accidentally added
+crochet-by-3-sisters/

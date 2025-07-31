@@ -1,14 +1,8 @@
-import sqlite3
+DROP TABLE IF EXISTS products;
 
-conn = sqlite3.connect("products.db")
-cursor = conn.cursor()
-
-cursor.execute("DROP TABLE IF EXISTS products")
-
-cursor.execute("""
 CREATE TABLE products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    name TEXT UNIQUE,
     category TEXT NOT NULL,
     price_inr REAL NOT NULL,
     price_gbp REAL NOT NULL,
@@ -25,10 +19,4 @@ CREATE TABLE products (
     video TEXT,
     rating REAL DEFAULT 0,
     rating_count INTEGER DEFAULT 0
-)
-""")
-
-conn.commit()
-conn.close()
-
-print("✅ products table created successfully.")
+);

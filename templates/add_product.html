@@ -1,128 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add New Product</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #f9f9f9;
-        }
-        form {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 20px;
-        }
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 6px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-        input[type="file"] {
-            margin-top: 6px;
-        }
-        button {
-            margin-top: 30px;
-            background-color: #ff7f50;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #e7663f;
-        }
-        .message {
-            max-width: 600px;
-            margin: auto;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #e0ffe0;
-            color: #006400;
-            text-align: center;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
+<h2>Add New Product</h2>
+<form method="POST" enctype="multipart/form-data">
+    <label>Product Name:</label><br>
+    <input type="text" name="name" maxlength="50" required><br><br>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="message">
-          {{ messages[0] }}
-        </div>
-      {% endif %}
-    {% endwith %}
+    <label>Category:</label><br>
+    <select name="category" required>
+        <option value="earrings">Earrings</option>
+        <option value="bracelets">Bracelets</option>
+        <option value="keychains">Keychains</option>
+        <option value="flowers">Flowers</option>
+    </select><br><br>
 
-    <form method="POST" enctype="multipart/form-data">
-        <h2>Add New Product</h2>
+    <label>Price (INR):</label>
+    <input type="number" step="0.01" name="price_inr" required><br>
 
-        <label>Product Name:</label>
-        <input type="text" name="name" maxlength="50" placeholder="e.g., Snowflake Keychain" required>
+    <label>Price (GBP):</label>
+    <input type="number" step="0.01" name="price_gbp" required><br>
 
-        <label>Category:</label>
-        <select name="category" required>
-            <option value="earrings">Earrings</option>
-            <option value="bracelets">Bracelets</option>
-            <option value="keychains">Keychains</option>
-            <option value="flowers">Flowers</option>
-        </select>
+    <label>Upload Images (3–4):</label><br>
+    <input type="file" name="images" multiple accept="image/*"><br><br>
 
-        <label>Price (INR):</label>
-        <input type="number" step="0.01" name="price_inr" required>
+    <label>Upload Video (optional):</label><br>
+    <input type="file" name="video" accept="video/*"><br><br>
 
-        <label>Price (GBP):</label>
-        <input type="number" step="0.01" name="price_gbp" required>
+    <label>Length:</label><br>
+    <input type="text" name="length"><br>
 
-        <label>Upload Images (3–4):</label>
-        <input type="file" name="images" multiple accept="image/*" required>
-        <small>Select 3 to 4 clear images</small>
+    <label>Height:</label><br>
+    <input type="text" name="height"><br>
 
-        <label>Upload Video (optional):</label>
-        <input type="file" name="video" accept="video/*">
+    <label>Width:</label><br>
+    <input type="text" name="width"><br>
 
-        <label>Length:</label>
-        <input type="text" name="length" placeholder="e.g., 5 cm">
+    <label>Weight:</label><br>
+    <input type="text" name="weight"><br>
 
-        <label>Height:</label>
-        <input type="text" name="height" placeholder="e.g., 2.5 cm">
+    <label>Material:</label><br>
+    <input type="text" name="material"><br><br>
 
-        <label>Width:</label>
-        <input type="text" name="width" placeholder="e.g., 1.8 cm">
+    <label>Description:</label><br>
+    <textarea name="description" rows="4" required></textarea><br><br>
 
-        <label>Weight:</label>
-        <input type="text" name="weight" placeholder="e.g., 15 g">
-
-        <label>Material:</label>
-        <input type="text" name="material" placeholder="e.g., Cotton yarn, metal ring">
-
-        <label>Description:</label>
-        <textarea name="description" rows="4" placeholder="Describe the look, feel, use, or care instructions..." required></textarea>
-
-        <button type="submit">Add Product</button>
-    </form>
-
-</body>
-</html>
+    <button type="submit">Add Product</button>
+</form>

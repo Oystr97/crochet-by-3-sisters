@@ -10,3 +10,4 @@ cursor.execute("ALTER TABLE products ADD COLUMN price_uk REAL")
 conn.commit()
 conn.close()
 print("✅ Added price_in and price_uk to products table.")
+

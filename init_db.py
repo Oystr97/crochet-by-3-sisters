@@ -1,29 +1,18 @@
 import sqlite3
 
-conn = sqlite3.connect('database.db')  # or whatever your DB is called
+# Connect to (or create) a new database file
+conn = sqlite3.connect('products.db')
 cursor = conn.cursor()
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    price REAL NOT NULL,
-    category TEXT NOT NULL,
-    description TEXT,
-    length REAL,
-    height REAL,
-    width REAL,
-    weight REAL,
-    material TEXT,
-    image1 TEXT,
-    image2 TEXT,
-    image3 TEXT,
-    image4 TEXT,
-    rating INTEGER DEFAULT 0
-)
-''')
+# Read the SQL file
+with open('init_products.sql', 'r') as f:
+    sql = f.read()
 
+# Execute the SQL commands
+cursor.executescript(sql)
+
+# Commit changes and close connection
 conn.commit()
 conn.close()
 
-print("✅ Database and products table created.")
+print("✅ Database created successfully!")
